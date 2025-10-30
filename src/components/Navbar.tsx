@@ -19,7 +19,7 @@ const Navbar = () => {
               <p className="text-sm text-muted-foreground">{currentUser.name}</p>
             </div>
           </div>
-          <Button onClick={logout} variant="outline">
+          <Button onClick={logout} variant="outline" className='rounded-sm'>
             Logout
           </Button>
         </div>
