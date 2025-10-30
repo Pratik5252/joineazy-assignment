@@ -34,9 +34,25 @@ export default function SubmissionDialog({ assignmentId, onClose }: SubmissionDi
   if (!assignmentId || !currentUser) return null;
 
   const assignment = dataService.getAssignmentById(assignmentId);
-  const submission = dataService.getSubmission(assignmentId, currentUser.id);
+  let submission = dataService.getSubmission(assignmentId, currentUser.id);
   
-  if (!assignment || !submission) return null;
+  if (!assignment) return null;
+
+  if (!submission) {
+    const newSubmission = {
+      id: crypto.randomUUID(),
+      assignmentId: assignmentId,
+      studentId: currentUser.id,
+      status: "not_submitted" as const,
+      driveLinkSubmitted: null,
+      notes: null,
+      confirmationSteps: [],
+      confirmedAt: null,
+      lastUpdatedAt: new Date().toISOString(),
+    };
+    dataService.createSubmission(newSubmission);
+    submission = newSubmission;
+  }
 
   const status = submission.status;
 
