@@ -94,6 +94,11 @@ export function getAssignmentsByClass(className: string): Assignment[] {
   );
 }
 
+export function getAssignmentById(id: string): Assignment | undefined {
+  const assignments = getAssignments();
+  return assignments.find((assignment) => assignment.id === id);
+}
+
 export function getAssignmentsByCreator(creatorId: string): Assignment[] {
   const assignments = getAssignments();
   return assignments.filter((assignment) => assignment.createdBy === creatorId);
