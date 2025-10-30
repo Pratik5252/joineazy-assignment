@@ -145,3 +145,9 @@ export function updateSubmission(id: string, updates: Partial<Submission>): void
     localStorage.setItem(STORAGE_KEYS.SUBMISSIONS, JSON.stringify(submissions));
   }
 }
+
+export function createSubmission(submission: Submission): void {
+  const submissions = getSubmissions();
+  submissions.push(submission);
+  localStorage.setItem(STORAGE_KEYS.SUBMISSIONS, JSON.stringify(submissions));
+}
