@@ -1,7 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { User } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as dataService from "@/services/dataService";
 import type { Assignment, Submission } from "@/types";
@@ -11,8 +10,7 @@ export default function StudentDashboard() {
   const [assignment, setAssignment] = useState<Assignment[]>([]);
   const [submitted, setSubmitted] = useState<Submission[]>([]);
   const [selectedAssignmentId, setSelectedAssignmentId] = useState<string | null>(null);
-  const { currentUser, logout } = useAuth();
-
+  const { currentUser } = useAuth();
   const loadData = () => {
     if(currentUser?.meta.class){
       const assignments = dataService.getAssignmentsByClass(currentUser.meta.class);
@@ -25,26 +23,13 @@ export default function StudentDashboard() {
   useEffect(() => {
     loadData();
   }, [currentUser]);
+
   if (!currentUser) {
     return null;
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-card shadow-sm border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Student Dashboard</h1>
-            <div className="flex items-center gap-2">
-              <User size={16}/>
-              <p className="text-sm text-muted-foreground">{currentUser.name}</p>
-            </div>
-          </div>
-          <Button onClick={logout} variant="outline">
-            Logout
-          </Button>
-        </div>
-      </header>
       <main className="max-w-7xl mx-auto px-4 py-8">
         <h2 className="text-xl font-semibold text-foreground mb-4">
           My Assignments ({assignment.length})
