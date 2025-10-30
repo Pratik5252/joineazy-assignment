@@ -5,10 +5,10 @@ import path from "path"
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
+  plugins: [tailwindcss(),
     react({
       babel: {
-        plugins: [['babel-plugin-react-compiler'],tailwindcss()],
+        plugins: [['babel-plugin-react-compiler']],
       },
     }),
   ],
