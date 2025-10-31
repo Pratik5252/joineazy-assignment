@@ -98,14 +98,15 @@ export default function SubmissionDialog({ assignmentId, onClose }: SubmissionDi
       <DialogContent className="max-w-xl">
         <DialogHeader>
           <DialogTitle>Submit Assignment</DialogTitle>
-          <DialogDescription>
-            {assignment.title}
+          <DialogDescription className="mt-1">
+            <h4 >{assignment.title}</h4>
+            <p>{assignment.description}</p>
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-foreground">Current Status:</span>
-          <span className={`px-3 py-1 rounded-full text-sm font-semibold ${statusInfo.color}`}>
+          <span className={`px-3 py-1 rounded-full text-sm ${statusInfo.color}`}>
             {statusInfo.text}
           </span>
         </div>
