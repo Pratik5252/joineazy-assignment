@@ -18,7 +18,8 @@ import * as dataService from "@/services/dataService";
 import type { Assignment, User as UserType } from "@/types";
 import CreateAssignmentForm from "@/components/CreateAssignmentForm";
 import EditAssignmentForm from "@/components/EditAssignmentForm";
-import SubmissionsModal from "@/components/SubmissionsModal";
+import SubmissionsModal from "@/components/AdminSubmissionsModal";
+import { loadAdminData } from "@/utils/dataLoader";
 
 export default function AdminDashboard() {
   const { currentUser } = useAuth();
@@ -30,10 +31,9 @@ export default function AdminDashboard() {
 
   const loadData = () => {
     if (currentUser) {
-      const myAssignments = dataService.getAssignmentsByCreator(currentUser.id);
-      const allStudents = dataService.getUsers().filter((u) => u.role === "student");
-      setAssignments(myAssignments);
-      setStudents(allStudents);
+      const data = loadAdminData(currentUser.id);
+      setAssignments(data.assignments);
+      setStudents(data.students);
     }
   };
 

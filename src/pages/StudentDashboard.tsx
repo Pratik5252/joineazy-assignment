@@ -2,21 +2,21 @@ import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import * as dataService from "@/services/dataService";
 import type { Assignment, Submission } from "@/types";
-import SubmissionDialog from "@/components/SubmissionDialog";
+import SubmissionDialog from "@/components/StudentSubmissionModal";
+import { loadStudentData } from "@/utils/dataLoader";
 
 export default function StudentDashboard() {
   const [assignment, setAssignment] = useState<Assignment[]>([]);
   const [submitted, setSubmitted] = useState<Submission[]>([]);
   const [selectedAssignmentId, setSelectedAssignmentId] = useState<string | null>(null);
   const { currentUser } = useAuth();
+  
   const loadData = () => {
-    if(currentUser?.meta.class){
-      const assignments = dataService.getAssignmentsByClass(currentUser.meta.class);
-      const submissions = dataService.getSubmissionsByStudent(currentUser.id);
-      setAssignment(assignments);
-      setSubmitted(submissions);
+    if (currentUser?.meta.class) {
+      const data = loadStudentData(currentUser.id, currentUser.meta.class);
+      setAssignment(data.assignments);
+      setSubmitted(data.submissions);
     }
   };
 
