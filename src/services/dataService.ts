@@ -110,6 +110,28 @@ export function createAssignment(assignment: Assignment): void {
   localStorage.setItem(STORAGE_KEYS.ASSIGNMENTS, JSON.stringify(assignments));
 }
 
+export function updateAssignment(id: string, updates: Partial<Assignment>): void {
+  const assignments = getAssignments();
+  const index = assignments.findIndex((a) => a.id === id);
+  if (index !== -1) {
+    assignments[index] = {
+      ...assignments[index],
+      ...updates,
+    };
+    localStorage.setItem(STORAGE_KEYS.ASSIGNMENTS, JSON.stringify(assignments));
+  }
+}
+
+export function deleteAssignment(id: string): void {
+  const assignments = getAssignments();
+  const filtered = assignments.filter((a) => a.id !== id);
+  localStorage.setItem(STORAGE_KEYS.ASSIGNMENTS, JSON.stringify(filtered));
+  
+  const submissions = getSubmissions();
+  const filteredSubmissions = submissions.filter((s) => s.assignmentId !== id);
+  localStorage.setItem(STORAGE_KEYS.SUBMISSIONS, JSON.stringify(filteredSubmissions));
+}
+
 // ===== Submissions =====
 function getSubmissions(): Submission[] {
   const submissionsStr = localStorage.getItem(STORAGE_KEYS.SUBMISSIONS);
