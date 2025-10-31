@@ -56,17 +56,17 @@ export default function StudentDashboard() {
               
               return (
                 <Card key={assignment.id} className="rounded-md flex flex-col">
-                  <CardContent className="p-6 flex flex-col flex-1">
+                  <CardContent className="px-6 flex flex-col flex-1">
                     <div className="flex flex-col gap-3 mb-4">
                       <div className="flex justify-between items-start gap-2">
-                        <h2 className="text-lg font-semibold text-foreground line-clamp-2 flex-1">
+                        <h3 className="text-lg font-semibold text-foreground line-clamp-2 flex-1">
                           {assignment.title}
-                        </h2>
+                        </h3>
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${statusInfo.color}`}>
                           {statusInfo.text}
                         </span>
                       </div>
-                      <p className="text-sm text-muted-foreground line-clamp-3">{assignment.description}</p>
+                      <p className="text-sm text-muted-foreground line-clamp-2">{assignment.description}</p>
                       <div className="flex flex-col gap-1 text-sm text-muted-foreground">
                         <span>Course: {assignment.course}</span>
                         <span>Due: {new Date(assignment.dueDate).toLocaleDateString()}</span>
