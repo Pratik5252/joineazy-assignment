@@ -285,6 +285,12 @@ Status badge changes to Green (immutable)
 
 ### Future-Ready Architecture
 
+While this demo uses 1 admin and 2 students, the architecture supports:
+- Multiple admins managing different courses
+- Hundreds of students across multiple classes
+- Role-based data isolation (users only see their own data)
+To add more users, simply update `public/seed.json`
+
 **Easy to Extend:**
 - ✅ Swap localStorage → REST API (change only `dataService.ts`)
 - ✅ Add authentication → Replace `login()` function
