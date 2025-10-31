@@ -36,9 +36,13 @@ export default function StudentDashboard() {
         </h2>
         
         {assignment.length === 0 ? (
-          <p className="text-muted-foreground">No assignments assigned to your class.</p>
+          <Card className="rounded-md">
+            <CardContent className="p-8 text-center">
+              <p className="text-muted-foreground">No assignments assigned to your class.</p>
+            </CardContent>
+          </Card>
         ) : (
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {assignment.map((assignment) => {
               const submission = submitted.find(s => s.assignmentId === assignment.id);
               const status = submission?.status || "not_submitted";
@@ -51,26 +55,30 @@ export default function StudentDashboard() {
               const statusInfo = statusConfig[status as keyof typeof statusConfig];
               
               return (
-                <Card key={assignment.id} className="rounded-md">
-                  <CardContent className="px-4">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex-1">
-                        <h2 className="text-lg font-semibold text-foreground">{assignment.title}</h2>
-                        <p className="text-sm text-muted-foreground mt-1">{assignment.description}</p>
-                        <p className="text-sm text-muted-foreground/80 mt-2">
-                          Due Date: {new Date(assignment.dueDate).toLocaleDateString()}
-                        </p>
+                <Card key={assignment.id} className="rounded-md flex flex-col">
+                  <CardContent className="p-6 flex flex-col flex-1">
+                    <div className="flex flex-col gap-3 mb-4">
+                      <div className="flex justify-between items-start gap-2">
+                        <h2 className="text-lg font-semibold text-foreground line-clamp-2 flex-1">
+                          {assignment.title}
+                        </h2>
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${statusInfo.color}`}>
+                          {statusInfo.text}
+                        </span>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${statusInfo.color}`}>
-                        {statusInfo.text}
-                      </span>
+                      <p className="text-sm text-muted-foreground line-clamp-3">{assignment.description}</p>
+                      <div className="flex flex-col gap-1 text-sm text-muted-foreground">
+                        <span>Course: {assignment.course}</span>
+                        <span>Due: {new Date(assignment.dueDate).toLocaleDateString()}</span>
+                      </div>
                     </div>
                     
-                    <div className="flex justify-end">
+                    <div className="mt-auto pt-4 border-t border-border">
                       <Button 
                         onClick={() => setSelectedAssignmentId(assignment.id)}
                         disabled={status === "confirmed"}
                         variant={status === "confirmed" ? "outline" : "default"}
+                        className="w-full"
                       >
                         {status === "confirmed" 
                           ? "Submitted" 
