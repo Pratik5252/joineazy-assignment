@@ -95,7 +95,7 @@ export default function SubmissionDialog({ assignmentId, onClose }: SubmissionDi
 
   return (
     <Dialog open={!!assignmentId} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-xl">
         <DialogHeader>
           <DialogTitle>Submit Assignment</DialogTitle>
           <DialogDescription>
