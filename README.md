@@ -2,6 +2,21 @@
 
 A modern, responsive dashboard application for managing student assignments with role-based access for students and administrators. Built with React, TypeScript, and Tailwind CSS.
 
+<div align="start">
+  <table>
+    <tr>
+      <td width="50%">
+        <img src="./public/studentDashboard.png" alt="Student Dashboard" />
+        <p align="center"><b>Student Dashboard</b></p>
+      </td>
+      <td width="50%">
+        <img src="./public/adminDashboard.png" alt="Admin Dashboard" />
+        <p align="center"><b>Admin Dashboard</b></p>
+      </td>
+    </tr>
+  </table>
+</div>
+
 ## 📋 Table of Contents
 
 - [Setup Instructions](#setup-instructions)
