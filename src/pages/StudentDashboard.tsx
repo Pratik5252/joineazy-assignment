@@ -29,7 +29,7 @@ export default function StudentDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-full bg-background">
       <main className="max-w-7xl mx-auto px-4 py-8">
         <h2 className="text-xl font-semibold text-foreground mb-4">
           My Assignments ({assignment.length})
