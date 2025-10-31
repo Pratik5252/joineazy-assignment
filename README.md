@@ -195,64 +195,6 @@ export function updateAssignment(id: string, updates: Partial<Assignment>): void
 - **Two-step submission**: Student declares → Student confirms (prevents accidents)
 - **Why?**: Reduces cognitive load, scalable UI for many students/assignments
 
-### Key Components
-
-#### **Authentication Flow**
-```
-LoginPage → AuthContext.login(role) → Dashboard (role-based)
-```
-- Simulated authentication (no backend required)
-- Persists user in localStorage
-- Context API broadcasts auth state globally
-
-#### **Student Dashboard**
-```typescript
-// Grid layout with responsive breakpoints
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-  {assignments.map(assignment => (
-    <AssignmentCard 
-      status={submission?.status || "not_submitted"}
-      onSubmit={() => openDialog(assignment.id)}
-    />
-  ))}
-</div>
-```
-
-**Three-State Status System:**
-1. **Not Submitted** (Red): No action taken
-2. **Submitted** (Yellow): Declared but not confirmed
-3. **Confirmed** (Green): Final submission complete
-
-**Double Verification Flow:**
-```
-Click Submit → Check box "I uploaded" → Declare Submission (AlertDialog)
-→ Status: Submitted → Click Confirm → Final Confirmation (AlertDialog)
-→ Status: Confirmed (Immutable)
-```
-
-#### **Admin Dashboard**
-```typescript
-// Grid layout for assignment cards
-// Each card has: Edit, Delete, View Submissions actions
-<AssignmentCard>
-  <EditButton onClick={() => openEditModal(assignment)} />
-  <DeleteButton onClick={() => confirmDelete(assignment.id)} />
-  <ViewSubmissionsButton onClick={() => openModal(assignment)} />
-</AssignmentCard>
-```
-
-**Submissions Modal:**
-- Full-screen table (90vh x 90vw)
-- Columns: Student Name, Progress Bar, Status, Submitted On
-- Shows all students in course (even without submissions)
-- Real-time progress tracking
-
-#### **Form Components**
-- **CreateAssignmentForm**: Modal dialog with validation
-- **EditAssignmentForm**: Pre-filled form with `useEffect` to sync data
-- **Shared validation logic**: URL validation, required field checks
-- **Why modals?**: Non-intrusive, focused interaction, mobile-friendly
-
 ### State Management Strategy
 
 #### **Local State (useState)**
@@ -283,34 +225,6 @@ useEffect(() => {
   loadData();
 }, [currentUser]);
 ```
-
-### Styling & Theming
-
-#### **CSS Variable System**
-```css
-/* index.css - Easy theme customization */
---status-success: oklch(0.65 0.15 145);
---status-warning: oklch(0.75 0.15 85);
---status-error: oklch(0.65 0.20 25);
---link: oklch(0.55 0.20 250);
-```
-
-**Benefits:**
-- One place to change colors (light/dark mode ready)
-- Consistent design tokens
-- Perceptually uniform colors (OKLCH)
-
-#### **Tailwind CSS Integration**
-```typescript
-// Utility-first with custom variables
-className="text-status-error bg-status-error-bg"
-className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-```
-
-#### **shadcn/ui Components**
-- **Installed components**: button, card, dialog, alert-dialog, table
-- **Why shadcn?**: Copy-paste components, full customization, no dependencies
-- **Tailwind-native**: Perfect integration with utility classes
 
 ### Data Flow Architecture
 
@@ -361,28 +275,6 @@ Status badge changes to Green (immutable)
 3. **Lazy State Updates**: Only re-render when data actually changes
 4. **Utility Functions**: Centralized `loadStudentData()` and `loadAdminData()` prevent duplicate code
 
-### Accessibility Considerations
-
-- **Semantic HTML**: Proper heading hierarchy, form labels
-- **Keyboard Navigation**: All interactive elements accessible via keyboard
-- **ARIA Labels**: Screen reader support for icons and actions
-- **Color + Text**: Status shown with both color and text (colorblind-friendly)
-- **Focus States**: Clear focus indicators on interactive elements
-
-### Responsive Design
-
-```css
-/* Mobile-first approach */
-grid-cols-1          /* 1 column on mobile */
-md:grid-cols-2       /* 2 columns on tablet (768px+) */
-lg:grid-cols-3       /* 3 columns on desktop (1024px+) */
-```
-
-**Modal Adaptation:**
-- Desktop: 90% viewport width/height
-- Mobile: Full screen with scrolling
-- Touch-friendly: Large buttons, adequate spacing
-
 ### Error Handling
 
 1. **Form Validation**: Client-side validation with error messages
@@ -405,26 +297,6 @@ lg:grid-cols-3       /* 3 columns on desktop (1024px+) */
 - Type-safe: TypeScript catches errors at compile time
 - Modular: Each component has single responsibility
 - Testable: Pure functions, isolated components
-
----
-
-## 🎨 Design Philosophy
-
-### **User Experience Principles**
-
-1. **Clarity**: Clear status indicators, obvious actions
-2. **Safety**: Confirmation dialogs for destructive actions
-3. **Efficiency**: Quick access to common tasks
-4. **Feedback**: Real-time updates, progress indicators
-5. **Consistency**: Same patterns across admin/student views
-
-### **Code Quality Principles**
-
-1. **DRY**: Shared utilities, reusable components
-2. **SOLID**: Single responsibility per component/function
-3. **Type Safety**: Strict TypeScript throughout
-4. **Readability**: Self-documenting code, clear naming
-5. **Maintainability**: Easy to understand and modify
 
 ---
 
